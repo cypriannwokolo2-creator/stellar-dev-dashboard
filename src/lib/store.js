@@ -151,29 +151,43 @@ export const useStore = create(persistMiddleware((set, get) => ({
   setContractError: (e) => set({ contractError: e }),
 
   // Comparison
-  comparisonKeys: ['', '', ''],
-  comparisonData: [null, null, null],
-  comparisonLoading: [false, false, false],
-  comparisonErrors: [null, null, null],
+  comparisonSlots: [
+    { key: '', data: null, loading: false, error: null },
+    { key: '', data: null, loading: false, error: null },
+    { key: '', data: null, loading: false, error: null }
+  ],
+  addComparisonSlot: () => set((state) => {
+    if (state.comparisonSlots.length >= 5) return state; // max 5 slots
+    return {
+      comparisonSlots: [...state.comparisonSlots, { key: '', data: null, loading: false, error: null }]
+    }
+  }),
+  removeComparisonSlot: (index) => set((state) => {
+    if (state.comparisonSlots.length <= 2) return state; // min 2 slots
+    const slots = [...state.comparisonSlots]
+    slots.splice(index, 1)
+    return { comparisonSlots: slots }
+  }),
+  reorderComparisonSlots: (orderedSlots) => set({ comparisonSlots: orderedSlots }),
   setComparisonKey: (index, key) => set((state) => {
-    const newKeys = [...state.comparisonKeys]
-    newKeys[index] = key
-    return { comparisonKeys: newKeys }
+    const slots = [...state.comparisonSlots]
+    slots[index] = { ...slots[index], key, error: null, data: null }
+    return { comparisonSlots: slots }
   }),
   setComparisonData: (index, data) => set((state) => {
-    const newData = [...state.comparisonData]
-    newData[index] = data
-    return { comparisonData: newData }
+    const slots = [...state.comparisonSlots]
+    slots[index] = { ...slots[index], data }
+    return { comparisonSlots: slots }
   }),
   setComparisonLoading: (index, loading) => set((state) => {
-    const newLoading = [...state.comparisonLoading]
-    newLoading[index] = loading
-    return { comparisonLoading: newLoading }
+    const slots = [...state.comparisonSlots]
+    slots[index] = { ...slots[index], loading }
+    return { comparisonSlots: slots }
   }),
   setComparisonError: (index, error) => set((state) => {
-    const newErrors = [...state.comparisonErrors]
-    newErrors[index] = error
-    return { comparisonErrors: newErrors }
+    const slots = [...state.comparisonSlots]
+    slots[index] = { ...slots[index], error, data: null }
+    return { comparisonSlots: slots }
   }),
 
   // Price feed state

@@ -8,7 +8,7 @@ import Contracts from './components/dashboard/Contracts'
 import NetworkStats from './components/dashboard/NetworkStats'
 import Faucet from './components/dashboard/Faucet'
 import Builder from './components/dashboard/Builder'
-import Compare from './components/dashboard/Compare'
+import AccountComparison from './components/dashboard/AccountComparison'
 import WalletConnect from './components/dashboard/WalletConnect'
 import TransactionSigner from './components/dashboard/TransactionSigner'
 import PriceTicker from './components/dashboard/PriceTicker'
@@ -26,7 +26,7 @@ const TABS = {
   network: NetworkStats,
   builder: Builder,
   faucet: Faucet,
-  compare: Compare,
+  compare: AccountComparison,
   wallet: WalletConnect,
   signer: TransactionSigner,
   portfolio: PortfolioValue,
